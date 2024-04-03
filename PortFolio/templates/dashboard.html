@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock title %}
+
+{% block main-content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<main id="main" class="main w3-animate-opacity">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+    </div>
+
+    <section class="section">
+        <div class="row">
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Stacked Bar Chart</h5>
+
+                        <div style="width: 80%; margin: auto;">
+                            <canvas id="folder-file-chart"></canvas>
+                        </div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                // Retrieve data from Django context
+                                var folderCount = {{ folder_count }};
+                                var fileCount = {{ file_count }};
+
+                                // Chart data
+                                var data = {
+                                    labels: ['Folders', 'Files'],
+                                    datasets: [{
+                                        label: 'Count',
+                                        data: [folderCount, fileCount],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)', // Color for folders
+                                            'rgba(54, 162, 235, 0.2)', // Color for files
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                };
+
+                                // Chart options
+                                var options = {
+                                    responsive: true,
+                                    animation: {
+                                        animateScale: true,
+                                        animateRotate: true
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                };
+
+                                // Create and render the chart
+                                var ctx = document.getElementById('folder-file-chart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: data,
+                                    options: options
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Folder Bar Chart</h5>
+                        <div style="width: 80%; margin: auto;">
+                            <canvas id="folder-chart"></canvas>
+                        </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var folderData = [
+                                    {% for folder_with_file_count in folders_with_file_count %}
+                                    {
+                                        folderName: "{{ folder_with_file_count.foldername }}",
+                                        fileCount: {{ folder_with_file_count.num_files }},
+                                    },
+                                    {% endfor %}
+                                ];
+                                var folderNames = folderData.map(item => item.folderName);
+                                var fileCounts = folderData.map(item => item.fileCount);
+                                var ctx = document.getElementById('folder-chart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: folderNames,
+                                        datasets: [{
+                                            label: 'File Count',
+                                            data: fileCounts,
+                                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                            borderColor: 'rgba(54, 162, 235, 1)',
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        
+
+            
+        </div>
+    </section>
+
+</main>
+{% endblock main-content %}

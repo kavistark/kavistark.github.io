@@ -1,0 +1,10 @@
+    <h1>Student Page - Submit Request</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="student_name">Student Name:</label><br>
+        <input type="text" id="student_name" name="student_name" required><br>
+        <label for="request_message">Request Message:</label><br>
+        <textarea id="request_message" name="request_message" rows="4" cols="50" required></textarea><br>
+        <button type="submit">Submit Request</button>
+    </form>

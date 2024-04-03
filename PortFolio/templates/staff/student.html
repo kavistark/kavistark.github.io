@@ -1,0 +1,43 @@
+{% extends 'staff/base.html' %}
+{% load static %}
+{% block title %}Staff Admin{% endblock title %}
+
+{% block main-content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Student List</h1>
+    </div>
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="row">
+                    {% for student in students %}
+                    <div class="col-xxl-4">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">User | {{ forloop.student }}</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ student.first_name }} {{ student.last_name }}</h6>
+                                        <a href="{% url 'student_details' student.id %}" class="btn btn-outline-primary">View Profile</a>
+                                        <span class="text-muted small pt-2 ps-1">{{ student.register_number }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+{% endblock main-content %}
+                
+  

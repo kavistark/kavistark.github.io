@@ -1,0 +1,18 @@
+ <h1>Pending Requests</h1>
+    <ul>
+        {% for request in pending_requests %}
+            <li>
+                <p>Student Name: {{ request.student_name }}</p>
+                <p>Student Email: {{ request.student_email }}</p>
+                <p>Message: {{ request.message }}</p>
+                <form method="post" action="{% url 'approve_request' request.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Approve</button>
+                </form>
+                <form method="post" action="{% url 'decline_request' request.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Decline</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>

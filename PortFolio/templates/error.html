@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Error{% endblock title %}
+
+{% block main-content %}
+
+
+<main id="main" class="main w3-animate-opacity">
+
+    <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+        <h1>Full my Profile </h1>
+        <p>{{ error_message }}</p>
+        <a class="btn btn-primary" href='{% url "profile" %}'>My Profile</a>
+        </div>
+    </div>
+</main>
+{% endblock main-content %}

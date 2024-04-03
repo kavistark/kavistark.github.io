@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Activity{% endblock title %}
+
+{% block main-content %}
+  <main id="main" class="main w3-animate-opacity">
+
+    <div class="pagetitle">
+      <h1>Activity</h1>
+    </div>
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-13">
+          <div class="card">
+            <div class="card-body pt-3">
+              <div class="tab-content pt-4">
+                <section class="section dashboard">
+                  <div class="row">
+                    <div class="col-lg">
+                     {% comment %} <div class="pagetitle ">
+                        <h1>User :  {{ user.username }}</h1>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Folder</button>
+                        <hr>
+                        
+                      </div> {% endcomment %}
+                      <div class="row">
+                          <div class="col">
+                              <div class="pagetitle">
+                                  <h1>User: {{ user.username }}</h1>
+                              </div>
+                          </div>
+                          <div class="col">
+                              <div class="pagetitle"  >
+                                <div class="text-end"> <!-- Align content to the right -->
+                                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Folder</button>
+                              </div>
+                              </div>
+                          </div>
+                      </div>
+                      <hr>
+
+                      <div class="row">
+                      {% for i in folder %}
+                        <div class="col-xxl-4 col-md-6">
+                          <div class="card info-card sales-card">
+
+                            <div class="filter">
+                              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                  <h6></h6>
+                                </li>
+
+                                <li><a href="{% url 'delete_folder' i.id %}" class="dropdown-item" href="#">Remove</a></li>
+                                
+                              </ul>
+                            </div>
+
+                            <div class="card-body">
+                              <h5 class="card-title">{{i.foldername}} <span>| </span>{{ forloop.counter }}</h5>
+
+                              <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                  <i class="bi bi-folder-fill"></i>
+                                </div>
+                                <div class="ps-3">
+                                
+                                  <h6 >{{i.folderdesc}}</h6>
+                                  <span class="text-success small pt-1 fw-bold"></span><a href="{% url 'folder' i.id %}" class="btn btn-outline-primary"  >Go Folder</a> <span class="text-muted small pt-2 ps-1"></span>
+                                  {% comment %} <a href="{% url 'delete_folder' i.id %}" class="btn btn-outline-danger">Delete Folder</a> {% endcomment %}
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                       {% endfor %}
+                      </div> 
+
+                    </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Folder</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form for adding folders -->
+        <form action="{% url 'addfolder' %}" method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="folderName" class="form-label">Folder Name</label>
+            <input type="text" class="form-control" id="folderName" name="foldername" required>
+          </div>
+          <div class="mb-3">
+            <label for="folderDesc" class="form-label">Folder Description</label>
+            <input type="text" class="form-control" id="folderDesc" name="folderdesc" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Folder</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock main-content %}

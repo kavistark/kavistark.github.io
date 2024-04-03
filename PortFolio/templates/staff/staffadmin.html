@@ -1,0 +1,131 @@
+{% extends 'staff/base.html' %}
+{% load static %}
+{% block title %}Staff Admin{% endblock title %}
+
+{% block main-content %}
+ <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Studend Request List</h1>
+    </div>
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">list </h5>
+
+              
+              {% comment %} <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Start Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Brandon Jacob</td>
+                    <td>Designer</td>
+                    <td>28</td>
+                    <td>2016-05-25</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Bridie Kessler</td>
+                    <td>Developer</td>
+                    <td>35</td>
+                    <td>2014-12-05</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Ashleigh Langosh</td>
+                    <td>Finance</td>
+                    <td>45</td>
+                    <td>2011-08-12</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Angus Grady</td>
+                    <td>HR</td>
+                    <td>34</td>
+                    <td>2012-06-11</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>Raheem Lehner</td>
+                    <td>Dynamic Division Officer</td>
+                    <td>47</td>
+                    <td>2011-04-19</td>
+                  </tr>
+                </tbody>
+              </table> {% endcomment %}
+              
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ request.student.username }}</td>
+                        <td>{{ request.timestamp }}</td>
+                        <td>
+                        {% comment %} <div class="text-center">
+                            {% if not request.approved and not request.declined %}
+                            <form action="{% url 'approve_request' request.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Approved</button>
+                                <button type="submit">Approve</button>
+                            </form>
+                            <form action="{% url 'decline_request' request.id %}" method="post">
+                                {% csrf_token %}
+                                 <button type="submit" class="btn btn-secondary">Declined</button>
+                                <button type="submit">Decline</button>
+                            </form> 
+                            </div> {% endcomment %}
+                            <div class="text-center">
+                                {% if not request.approved and not request.declined %}
+                                <form action="{% url 'approve_request' request.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Approved</button>
+                                </form>
+                                <form action="{% url 'decline_request' request.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-secondary">Declined</button>
+                                </form>
+                            </div>
+                            {% elif request.approved %}
+                            <span>Approved</span>
+                            {% elif request.declined %}
+                            <span>Declined</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+{% endblock main-content %}
+                
+  

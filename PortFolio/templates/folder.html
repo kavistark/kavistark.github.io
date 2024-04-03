@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Activity File{% endblock title %}
+
+{% block main-content %}
+  <main id="main" class="main w3-animate-opacity">
+
+    <div class="pagetitle">
+      <h1>Activity</h1>
+    </div>
+    
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-13">
+          <div class="card">
+            <div class="card-body pt-3">
+              <div class="tab-content pt-4">
+                <section class="section dashboard">
+                  <div class="row">
+                    <div class="row">
+                          <div class="col">
+                              <div class="pagetitle">
+                                  <h1>User: {{ user.username }}</h1>
+                              </div>
+                          </div>
+                          <div class="col">
+                              <div class="pagetitle"  >
+                                <div class="text-end"> 
+                                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Upload File</button>
+                              </div>
+                              </div>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            {% for i in files %} 
+                                <div class="col-xxl-4 col-md-6">
+                                    <div class="card info-card sales-card">
+                                        <div class="filter">
+                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                <li class="dropdown-header text-start">
+                                                    <h6></h6>
+                                                </li>
+                                                <li><a href="{% url 'delete_file' i.id %}" class="dropdown-item" href="#">Remove</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">File <span>| {{ forloop.counter }}</span></h5>
+                                            <div class="d-flex align-items-center">
+                                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                                                </div>
+                                                <div class="ps-3">
+                                                    <h6>{{ i.filetitle }}</h6>
+                                                    <span class="text-success small pt-1 fw-bold"></span>
+                                                    <a href="{{ i.file.url }}" class="btn btn-outline">Views File</a>
+                                                    <a href="{{ i.file.url }}" download="{{ i.file }}" class="btn btn-outline-primary">Download File</a>
+                                                    <span class="text-muted small pt-2 ps-1"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    {% comment %} <div class="row">
+                      {% for i in files %}
+                        <div class="col-xxl-4 col-md-6">
+                          <div class="card info-card sales-card">
+
+                            <div class="filter">
+                              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                  <h6>  </h6>
+                                </li>
+
+                                <li><a href="{% url 'delete_file' i.id %}" class="dropdown-item" href="#">Remove</a></li>
+                                
+                              </ul>
+                            </div>
+
+                            <div class="card-body">
+                              <h5 class="card-title">file<span>| </span></h5>
+
+                              <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                  <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                                </div>
+                                <div class="ps-3">
+                                  <h6 >{{i.filetitle}}</h6>
+                                  <span class="text-success small pt-1 fw-bold"></span> <a href="{{i.file.url}}" download="{{i.file}}" class="btn btn-outline-primary">Download File </a><span class="text-muted small pt-2 ps-1"></span> 
+                                
+                                 </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                       {% endfor %}
+                      </div>  {% endcomment %}
+                    </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+<div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'folder' folderid %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >File Name</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  name="file"
+                />
+                <label for="exampleFormControlInput1" class="form-label"
+                  >File Title</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  name="filetitle"
+                />
+                <button class="btn btn-outline-primary my-3">
+                  Upload File
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock main-content %}

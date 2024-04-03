@@ -1,0 +1,33 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+</head>
+<body>
+    <h1>admin Requests from Students</h1>
+    <ul>
+        {% for request in requests %}
+        <li>{{ request.student.username }} - {{ request.timestamp }} 
+            {% if not request.approved and not request.declined %}
+                <form action="{% url 'approve_request' request.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Approve</button>
+                </form>
+                <form action="{% url 'decline_request' request.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Decline</button>
+                </form>
+            {% elif request.approved %}
+                <span>Approved</span>
+            {% elif request.declined %}
+                <span>Declined</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

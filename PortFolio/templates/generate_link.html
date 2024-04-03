@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Generate QR & Link{% endblock title %}
+
+{% block main-content %}
+<main id="main" class="main  w3-animate-opacity" >
+    <div class="pagetitle">
+        <h1>Generate Profile Visit Link</h1>
+    </div>
+    <section class="section profile">
+        <div class="col-xl-4" >
+            <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                    {% if not profile_links_exist %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <button  class="btn btn-primary" type="submit">Generate Link</button>
+                        </form>
+                    {% endif %}
+                    {% if generated_link %}
+                    <br>
+                        <p>Generated Link: {{ generated_link }}</p>
+                        <img src="{% url 'generate_qr_code' generated_link=generated_link %}" alt="QR Code">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock main-content %}

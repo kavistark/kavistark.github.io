@@ -1,0 +1,52 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}HomePages{% endblock title %}
+
+{% block main-content %}
+
+
+<main id="main" class="main w3-animate-opacity">
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-13">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <div class="tab-content pt-4">
+
+                            <!-- Insert the provided HTML code here -->
+                            <main class="main">
+                                <section class="banner">
+                                    <div class="container">
+                                        <div class="banner-text">
+                                            <h1>Manage</h1>
+                                            <p><strong>We make it easy to get the most out of your virtual machine.</strong> Our tools make it simple to track how your Droplets are performing and help you to respond quickly if there is a problem</p>                                            
+                                            <form>
+                                              <div class="row">
+                                                <div class="col">
+                                                  <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                                </div>
+                                                <div class="col">
+                                                  <button>Send </button>
+                                                </div>
+                                              </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <img class="banner-image" src="{% static 'assets/img/banner-img.png' %}" alt="monitoring">
+                                </section>  
+                                
+                            </main>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+
+{% endblock main-content %}
